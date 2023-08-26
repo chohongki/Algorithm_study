@@ -2,7 +2,7 @@
 
 N, M = map(int, input().split())
 
-nums = list(set(map(int, input().split())))
+nums = list(map(int, input().split()))
 nums.sort()
 queue = []
 
@@ -11,9 +11,10 @@ def DFS(now):
         print(' '.join(map(str,queue)))
         return
 
-    for i in range(now, len(nums)):
-        queue.append(nums[i])
-        DFS(i+1)
-        queue.pop()
+    for i in nums:
+        if i not in queue:
+            queue.append(i)
+            DFS(i)
+            queue.pop()
 
-DFS(0)
+DFS(nums[0])
