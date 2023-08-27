@@ -2,8 +2,6 @@
 
 N, M = map(int, input().split())
 
-nums = list(set(map(int, input().split())))
-nums.sort()
 queue = []
 
 def DFS(now):
@@ -11,9 +9,9 @@ def DFS(now):
         print(' '.join(map(str,queue)))
         return
 
-    for i in range(now, len(nums)):
-        queue.append(nums[i])
-        DFS(i+1)
+    for i in range(now, N+1):
+        queue.append(i)
+        DFS(i)
         queue.pop()
 
-DFS(0)
+DFS(1)
