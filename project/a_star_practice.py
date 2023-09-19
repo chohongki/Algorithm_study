@@ -1,9 +1,11 @@
 '''
 해결 과제 :
 
-1. g 산출 계산식 안맞음
-2. openlist, closedlist 안쓴거에 대한 설명
-3. 기타등등
+
+1. 알고리즘 검증
+2. A* 알고리즘 제대로 이해
+3. input 데이터 중구난방....
+
 '''
 
 import heapq, sys, math
@@ -19,7 +21,7 @@ nodes = [[]]
 
 # QT Class
 class GridWindow(QMainWindow):
-    def __init__(self, grid_data):
+    def __init__(self, grid_data, src, dst):
         super().__init__()
 
         self.setWindowTitle("A-Star Example")
@@ -31,6 +33,8 @@ class GridWindow(QMainWindow):
         grid_layout = QGridLayout(central_widget)
 
         self.grid_data = grid_data
+        self.src = src
+        self.dst = dst
 
         self.cell_labels = [[0 for i in range(len(grid_data[0]))] for _ in range(len(grid_data))]
 
@@ -55,9 +59,7 @@ class GridWindow(QMainWindow):
         self.cell_labels[r][c].setStyleSheet(f"background-color: {'green'};")
 
     def find_path(self):
-        src = (0, 0)
-        dst = (8, 9)
-        aStarSearch(self, self.grid_data, src, dst)
+        aStarSearch(self, self.grid_data, self.src, self.dst)
 
 # 노드 Class
 class Node:
@@ -83,6 +85,9 @@ class Node:
     # F값 리턴
     def getF(self):
         return self.f
+    
+    def getG(self):
+        return self.g
 
 # 주변 8블럭 중 갈 수 있는 블럭들 좌표 리스트 리턴
 
@@ -136,10 +141,15 @@ def aStarSearch(window, grid_data, src, dst):
             new_col = now_col + new_j
             new_destination = (new_row, new_col)
 
+            # find dst
+            if new_destination == dst:
+                queue = []
+                break
+
             if not (0 < new_row < row and 0 < new_col < col and grid_data[new_row][new_col]):
                 continue
 
-            new_g = euclidian(src, new_destination)
+            new_g = nodes[now_row][now_col].getG() + 1  # 자식과의 거리 1로 가정
             new_h = euclidian(new_destination, dst)
             new_f = new_g + new_h
 
@@ -165,9 +175,12 @@ def main():
         [1, 1, 1, 0, 0, 0, 1, 0, 0, 1]
     ]
 
+    src = (0, 0)
+    dst = (4, 8)
+
     # QT 실행
     app = QApplication(sys.argv)
-    window = GridWindow(grid_data)
+    window = GridWindow(grid_data, src, dst)
     window.show()
 
     sys.exit(app.exec_())
