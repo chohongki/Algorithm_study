@@ -1,9 +1,9 @@
-#다익스트라 #djikstra
+# 다익스트라 #djikstra
 
 import heapq, sys
 
 INF = sys.maxsize
-input = sys.stdin.readline  #그지같네 이거 해야됨
+input = sys.stdin.readline
 
 V, E = map(int, input().split())
 K = int(input())
@@ -38,5 +38,4 @@ def djikstra(graph, start):
 distances = djikstra(graph, K)
 
 for i in range(1, V+1):
-
     print("INF" if distances[i] == INF else distances[i])
