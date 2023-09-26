@@ -6,13 +6,12 @@ def square(numbers, result, index):
     partial_sum = 0
     for num in numbers:
         partial_sum += num * num
-    result.value = partial_sum
+    result[index] = partial_sum
 
 if __name__ == "__main__":
     # 입력 데이터
     numbers = list(range(100_000_00))
-    result = multiprocessing.Value('i', 0)
-    # result = [0,0]
+    result = [0, 0]
     # 두 개의 프로세스 생성
     process1 = multiprocessing.Process(target=square, args=(numbers, result, 0))
     process2 = multiprocessing.Process(target=square, args=(numbers, result, 1))
@@ -31,7 +30,7 @@ if __name__ == "__main__":
     process2.join()
 
     # 결과 출력
-    # total_sum = result[0] + result[1]
+    total_sum = result[0] + result[1]
 
     print("Total sum of squared numbers:", result)
     print("작업 시간 : ", (time.time() - start_time), "sec")
