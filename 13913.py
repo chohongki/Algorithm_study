@@ -23,13 +23,13 @@ while queue:
         continue
 
     next_cnt = now_cnt + 1
-    if now_pos > 0 and next_cnt <= distance[now_pos - 1]:
+    if now_pos > 0 and next_cnt < distance[now_pos - 1]:
         distance[now_pos - 1] = next_cnt
         queue.append((next_cnt, now_pos-1))
-    if now_pos < 100000 and next_cnt <= distance[now_pos + 1]:
+    if now_pos < 100000 and next_cnt < distance[now_pos + 1]:
         distance[now_pos + 1] = next_cnt
         queue.append((next_cnt, now_pos+1))
-    if now_pos * 2 < 100001 and next_cnt <= distance[now_pos * 2]:
+    if now_pos * 2 < 100001 and next_cnt < distance[now_pos * 2]:
         distance[now_pos * 2] = next_cnt
         queue.appendleft((next_cnt, now_pos*2))
 
