@@ -1,2 +1,4 @@
 # unsolved py
 python/*.py
+*.exe
+.vscode
