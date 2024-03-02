@@ -84,7 +84,7 @@ int DFS(int n) {
         total_length = first_mxm + second_mxm;
     }
 
-    return first_mxm > second_mxm ? first_mxm : second_mxm;
+    return first_mxm;
 }
 
 int main()
