@@ -1,25 +1,26 @@
 #include <string>
 #include <vector>
+#include <stack>
 
 using namespace std;
 
 vector<int> solution(vector<int> prices) {
     vector<int> answer;
     answer.resize(prices.size());
+    stack<int> s;
     
-    for (int i = 0; i < prices.size() - 1; i++) {
-        bool flag = false;
-        int j;
-        for (j = i + 1; j < prices.size(); j++) {
-            if (prices[i] > prices[j]) {
-                answer[i] = j - i;
-                flag = true;
-                break;
-            }
+    s.push(0);
+    for (int i = 1; i < prices.size()-1; i++) {
+        while (!s.empty() && prices[s.top()] > prices[i]) {
+            answer[s.top()] = i - s.top();
+            s.pop();
         }
-        if (!flag) {
-            answer[i] = j - i - 1;
-        }
+        s.push(i);
+    }
+    
+    while(!s.empty()) {
+        answer[s.top()] = prices.size() - 1 - s.top();
+        s.pop();
     }
     
     return answer;
